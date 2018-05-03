@@ -9,34 +9,57 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
+  TouchableOpacity
 } from 'react-native';
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+
+import shopcar from '../img/shopcar.png';
+import payoff from '../img/payoff.png'
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#FA7298',
+    paddingVertical:8
+  },
+  headerText: {
+    color:'#FFFFFF'
+  },
+  headerImage:{
+    width:15,
+    height:15,
+  },
+  headerImageButton_1 :{
+    position:'absolute',
+    right: 45,
+  },
+  headerImageButton_2 :{
+    position:'absolute',
+    right: 15,
+  }
+});
+
 
 export default class Shopping extends Component {
   render() {
     return (
       <View>
-        <Text>shoppin</Text>
-      </View>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>兑换中心</Text>
+          <TouchableOpacity style={styles.headerImageButton_1}>
+            <Image source={shopcar} style={styles.headerImage} resizeMode ='contain'/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerImageButton_2}>
+            <Image source={payoff} style={styles.headerImage} resizeMode ='contain'/>
+          </TouchableOpacity>
+        </View>
+        <View>
+          
+        </View>
+      </View>  
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
