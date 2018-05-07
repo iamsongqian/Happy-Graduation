@@ -5,14 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TouchableOpacity,
-  Dimensions
-} from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
 import ScrollableTabView ,{DefaultTabBar} from 'react-native-scrollable-tab-view'
 
 const {height, width} = Dimensions.get('window');
@@ -25,7 +18,8 @@ const styles = StyleSheet.create({
     paddingVertical:8
   },
 });
-
+const list =['推荐 ','军事','时政','娱乐','ACG']
+const length = list.length
 export default class News extends Component {
   render() {
     return (
@@ -35,14 +29,13 @@ export default class News extends Component {
           renderTabBar={() => <DefaultTabBar/>}
           tabBarBackgroundColor='#FA7298'
           tabBarActiveTextColor='#FFFFFF'
-          tabBarUnderlineStyle={{backgroundColor:'#FFFFFF',width:width/12,marginLeft:width/24}}
+          tabBarUnderlineStyle={{backgroundColor:'#FFFFFF',width:width/length/2,marginLeft:width/length/4}}
         >
-          <Text tabLabel='1'>1</Text>
-          <Text tabLabel='2'>2</Text>
-          <Text tabLabel='3'>3</Text>
-          <Text tabLabel='4'>4</Text>
-          <Text tabLabel='5'>5</Text>
-          <Text tabLabel='6'>6</Text>
+          {
+            list.map((item,i)=>
+              <Text key={i} tabLabel={item}>{item}</Text>
+            )
+          }
         </ScrollableTabView>
       </View>
     );

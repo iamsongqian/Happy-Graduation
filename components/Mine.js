@@ -13,10 +13,14 @@ import {
   TouchableOpacity
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+import { createStackNavigator } from 'react-navigation';
+import Login from './Login';
+import Register from './Register';
 import focus from '../img/focus.png';
 import guan from '../img/guanzhu.png';
 import lahei from '../img/heimingdan.png';
 import qian from '../img/qiandao.png';
+import jifen from '../img/jifen.png';
 
 const styles = StyleSheet.create({
   container:{
@@ -89,13 +93,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Mine extends Component {
+class Mine extends Component {
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.registerButton}><Text style={styles.register}>注册</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton}><Text style={styles.login}>登陆</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.registerButton} onPress={() => navigate('Register')}><Text style={styles.register}>注册</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.loginButton} onPress={() => navigate('Login')}><Text style={styles.login}>登陆</Text></TouchableOpacity>
         </View>
         <View style={styles.person}>
           <Text style={styles.Text}>个人中心</Text>
@@ -118,9 +123,26 @@ export default class Mine extends Component {
             <Image source={qian} style={styles.image} tintColor='#FA7298'/>
             <Text style={styles.buttonText}>签到</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.myButton}>
+            <Image source={jifen} style={styles.image}/>
+            <Text style={styles.buttonText}>积分</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
-
+export default createStackNavigator({
+  Mine:{
+    screen:Mine,
+    navigationOptions:{
+      header:null
+    }
+  },
+  Login: {
+    screen: Login,
+  },
+  Register:{
+    screen:Register
+  }
+});
