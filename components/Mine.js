@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+  AsyncStorage,
   StyleSheet,
   Text,
   View,
@@ -94,13 +95,42 @@ const styles = StyleSheet.create({
 });
 
 class Mine extends Component {
-  render() {
+  componentWillMount(){
+    console.log(123456)
+    
+  }
+  searchAccount = (account) =>{
+    AsyncStorage.getItem(account, (error, result) => {
+      if (!error) {
+          if (result !== '' && result !== null) {
+              console.log('查询到的内容是：' + result);
+          } else {
+              console.log('未找到指定保存的内容！');
+          }
+      } else {
+          console.log('查询数据失败');
+      }
+  })
+  }
+  register = () =>{
     const { navigate } = this.props.navigation;
+    navigate('Register',{
+      callback : (data)=>{
+        this.searchAccount(data)
+      }
+    })
+  }
+  login = () =>{
+    const { navigate } = this.props.navigation;
+    navigate('Login')
+  }
+  render() {
+    
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.registerButton} onPress={() => navigate('Register')}><Text style={styles.register}>注册</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton} onPress={() => navigate('Login')}><Text style={styles.login}>登陆</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.registerButton} onPress={this.register}><Text style={styles.register}>注册</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.loginButton} onPress={this.login}><Text style={styles.login}>登陆</Text></TouchableOpacity>
         </View>
         <View style={styles.person}>
           <Text style={styles.Text}>个人中心</Text>
