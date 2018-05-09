@@ -24,108 +24,108 @@ import qian from '../img/qiandao.png';
 import jifen from '../img/jifen.png';
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#F5F5F5'
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5'
   },
   header: {
     flexDirection: 'row',
     backgroundColor: '#FA7298',
     alignItems: 'center',
-    height:120
+    height: 120
   },
-  registerButton:{
-    width:80,
-    height:27,
+  registerButton: {
+    width: 80,
+    height: 27,
     borderRadius: 3,
-    position:'absolute',
-    left:90,
-    backgroundColor:'#FB8CAC',
+    position: 'absolute',
+    left: 90,
+    backgroundColor: '#FB8CAC',
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
   },
-  register:{
-    color:'#FFFFFF'
+  register: {
+    color: '#FFFFFF'
   },
-  loginButton:{
-    width:80,
-    height:27,
-    backgroundColor:'#FFFFFF',
+  loginButton: {
+    width: 80,
+    height: 27,
+    backgroundColor: '#FFFFFF',
     borderRadius: 3,
-    position:'absolute',
-    right:90,
+    position: 'absolute',
+    right: 90,
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
   },
-  login:{
-    color:'#FA7298'
+  login: {
+    color: '#FA7298'
   },
-  person:{
+  person: {
     marginTop: 10,
-    height:35,
-    backgroundColor:'#FFFFFF',
-    justifyContent:'center'
+    height: 35,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center'
   },
-  Text:{
-    marginLeft:15,
-    color:'#242423',
+  Text: {
+    marginLeft: 15,
+    color: '#242423',
     fontSize: 13,
   },
-  button:{
+  button: {
     flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor:'#FFFFFF',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
     borderTopColor: '#F0F0F0',
     borderTopWidth: 0.5,
-    height:90
+    height: 90
   },
-  image:{
-    width:35,
-    height:35,
+  image: {
+    width: 35,
+    height: 35,
   },
-  myButton:{
+  myButton: {
     alignItems: 'center',
     marginLeft: 15,
   },
-  buttonText:{
-    color:'#242423',
+  buttonText: {
+    color: '#242423',
     fontSize: 11,
     marginTop: 8,
   }
 });
 
 class Mine extends Component {
-  componentWillMount(){
+  componentWillMount() {
     console.log(123456)
-    
+
   }
-  searchAccount = (account) =>{
+  searchAccount = (account) => {
     AsyncStorage.getItem(account, (error, result) => {
       if (!error) {
-          if (result !== '' && result !== null) {
-              console.log('查询到的内容是：' + result);
-          } else {
-              console.log('未找到指定保存的内容！');
-          }
+        if (result !== '' && result !== null) {
+          console.log('查询到的内容是：' + result);
+        } else {
+          console.log('未找到指定保存的内容！');
+        }
       } else {
-          console.log('查询数据失败');
+        console.log('查询数据失败');
       }
-  })
+    })
   }
-  register = () =>{
+  register = () => {
     const { navigate } = this.props.navigation;
-    navigate('Register',{
-      callback : (data)=>{
+    navigate('Register', {
+      callback: (data) => {
         this.searchAccount(data)
       }
     })
   }
-  login = () =>{
+  login = () => {
     const { navigate } = this.props.navigation;
     navigate('Login')
   }
   render() {
-    
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -137,11 +137,11 @@ class Mine extends Component {
         </View>
         <View style={styles.button}>
           <TouchableOpacity style={styles.myButton}>
-            <Image source={guan} style={styles.image}/>
+            <Image source={guan} style={styles.image} />
             <Text style={styles.buttonText}>我的关注</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.myButton}>
-            <Image source={lahei} style={styles.image}/>
+            <Image source={lahei} style={styles.image} />
             <Text style={styles.buttonText}>黑名单</Text>
           </TouchableOpacity>
         </View>
@@ -150,12 +150,8 @@ class Mine extends Component {
         </View>
         <View style={styles.button}>
           <TouchableOpacity style={styles.myButton}>
-            <Image source={qian} style={styles.image} tintColor='#FA7298'/>
+            <Image source={qian} style={styles.image} tintColor='#FA7298' />
             <Text style={styles.buttonText}>签到</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.myButton}>
-            <Image source={jifen} style={styles.image}/>
-            <Text style={styles.buttonText}>积分</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -163,16 +159,16 @@ class Mine extends Component {
   }
 }
 export default createStackNavigator({
-  Mine:{
-    screen:Mine,
-    navigationOptions:{
-      header:null
+  Mine: {
+    screen: Mine,
+    navigationOptions: {
+      header: null
     }
   },
   Login: {
     screen: Login,
   },
-  Register:{
-    screen:Register
+  Register: {
+    screen: Register
   }
 });
