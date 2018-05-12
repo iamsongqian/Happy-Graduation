@@ -26,9 +26,12 @@ const styles = StyleSheet.create({
 export default class ShopCar extends Component {
   constructor(props){
     super(props)
+    this.state ={
+      list:this.props.navigation.state.params
+    }
   }
   render() {
-    const list = this.props.navigation.state.params
+    const {list} = this.state
     return (
       <View>
         {

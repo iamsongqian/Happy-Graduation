@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
     width: widthItem,
     height: 0.7 * widthItem,
     marginLeft: 5,
-    backgroundColor:'#FFFFFF'
+    backgroundColor: '#FFFFFF'
   },
-  image:{
+  image: {
     width: widthItem,
     height: 0.57 * widthItem,
   },
-  buttomText:{
-    color:'#E1A15B',
+  buttomText: {
+    color: '#E1A15B',
     fontWeight: 'normal',
     fontSize: 12,
   }
@@ -44,18 +44,17 @@ export default class ShoppingList extends Component {
       number: 0
     }
   }
-  add = ()=>{
-    debugger;
+  add = () => {
     let number = this.state.number + 1
-    this.setState({number:number})
+    this.setState({ number: number })
     let obj = {
       text: this.props.text,
       price: this.props.price,
       number: 1,
       imageIndex: this.props.imageIndex,
     }
-    if(list.length===0){
-      list.push( obj )
+    if (list.length === 0) {
+      list.push(obj)
     }
     else {
       for (i = 0; i < list.length; i++) {
@@ -64,27 +63,28 @@ export default class ShoppingList extends Component {
           console.log(list)
           return;
         }
-         
       }
-      list.push(obj)  
+      list.push(obj)
     }
     this.props.callback(list)
   }
   jian = () => {
     let eee = this.state.number - 1
-    let member = [
-      {
-        text: this.props.text,
-        price: this.props.price,
-        number:1,
-        imageIndex:this.props.imageIndex,
-      }
-    ]
     this.setState({ number: eee })
+    let obj = {
+      text: this.props.text,
+      price: this.props.price,
+      number: 1,
+      imageIndex: this.props.imageIndex,
+    }
     for (i = 0; i <= list.length; i++) {
-      if (JSON.stringify(member[0]) === JSON.stringify(list[i])){
-        list.splice(i, 1)
-        break
+      if (JSON.stringify(obj.text) === JSON.stringify(list[i].text)) {
+        list[i].number -= 1
+        if(list[i].number === 0){
+          list.splice(i,1)
+        }
+        console.log(list)
+        return;
       }
     }
     this.props.callback(list)
@@ -93,18 +93,18 @@ export default class ShoppingList extends Component {
     const imageSource = this.props.imageSource
     return (
       <View style={styles.container}>
-        <Image source={imageSource} style={styles.image} resizeMode='stretch'/>
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',height:20}}>
+        <Image source={imageSource} style={styles.image} resizeMode='stretch' />
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 20 }}>
           <Text style={styles.buttomText}>{this.props.price} 积分</Text>
-          <View style={{flexDirection:'row',alignItems:'center',position:'absolute',right:7}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', position: 'absolute', right: 7 }}>
             {
-              this.state.number <= 0?null:
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                <TouchableOpacity onPress={this.jian}><Image source={jian} style={{width:12,height:12}}/></TouchableOpacity>
-                <Text style={{fontSize:11}}> {this.state.number} </Text>
-              </View>
+              this.state.number <= 0 ? null :
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <TouchableOpacity onPress={this.jian}><Image source={jian} style={{ width: 12, height: 12 }} /></TouchableOpacity>
+                  <Text style={{ fontSize: 11 }}> {this.state.number} </Text>
+                </View>
             }
-            <TouchableOpacity onPress={this.add}><Image source={add} style={{width:12,height:12}}/></TouchableOpacity>
+            <TouchableOpacity onPress={this.add}><Image source={add} style={{ width: 12, height: 12 }} /></TouchableOpacity>
           </View>
         </View>
       </View>

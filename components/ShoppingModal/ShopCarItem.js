@@ -27,6 +27,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'gray',
     marginTop: 10,
+  },
+  control:{
+    position:'absolute',
+    flexDirection:'row',
+    borderColor: 'gray',
+    borderWidth: 1,
+    height:20,
+    top:23,
+    right:15,
+    alignItems: 'center',
+  },
+  controlText:{
+    width: 50,
+    borderColor: 'gray',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    alignItems: 'center',
+    height:20,
+    justifyContent:'center'
   }
 });
 const ImageList = [hero1, hero2, hero3, hero4, hero5, hero6, hero7,]
@@ -40,24 +59,25 @@ export default class ShopCarItem extends Component {
     }
   }
   render() {
-    const {imageIndex,text,price,number} =this.props
+    const {imageIndex,text,price} =this.props
+    const {number} = this.state
     return (
       <View>
         {
-          this.state.show ?
+          number > 0 ?
             <View style={styles.item}>
               <Image source={ImageList[imageIndex]} style={{ width: 60, height: 60 }} />
               <View>
                 <Text style={styles.text}>{text}</Text>
                 <Text style={styles.text}>{price} 积分</Text>
               </View>
-              <View>
-                <TouchableOpacity></TouchableOpacity>
-                <Text>{this.state.totalprice}</Text>
-                <TouchableOpacity></TouchableOpacity>
+              <View style={styles.control}>
+                <TouchableOpacity onPress={()=>this.setState({number:number+1})} style={{width: 20, alignItems: 'center', justifyContent: 'center'}}><Text>+</Text></TouchableOpacity>
+                <View style={styles.controlText}><Text style={{ fontSize: 12}}>{number}</Text></View>
+                <TouchableOpacity onPress={()=>this.setState({number:number-1})} style={{width: 20, alignItems: 'center',justifyContent: 'center'}}><Text>－</Text></TouchableOpacity>
               </View>
             </View>
-          : null
+            : null
         }
       </View>
     );
