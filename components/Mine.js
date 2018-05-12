@@ -14,9 +14,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
-import { createStackNavigator } from 'react-navigation';
-import Login from './Login';
-import Register from './Register';
+
+
 import focus from '../img/focus.png';
 import guan from '../img/guanzhu.png';
 import lahei from '../img/heimingdan.png';
@@ -94,11 +93,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Mine extends Component {
-  componentWillMount() {
-    console.log(123456)
-
-  }
+export default class Mine extends Component {
   searchAccount = (account) => {
     AsyncStorage.getItem(account, (error, result) => {
       if (!error) {
@@ -158,17 +153,3 @@ class Mine extends Component {
     );
   }
 }
-export default createStackNavigator({
-  Mine: {
-    screen: Mine,
-    navigationOptions: {
-      header: null
-    }
-  },
-  Login: {
-    screen: Login,
-  },
-  Register: {
-    screen: Register
-  }
-});

@@ -16,7 +16,6 @@ import {
 import ShoppingList from './ShoppingList'
 import shopcar from '../img/shopcar.png';
 import payoff from '../img/payoff.png'
-
 import hero1 from '../hero/hero1.png';
 import hero2 from '../hero/hero2.png';
 import hero3 from '../hero/hero3.png';
@@ -24,10 +23,6 @@ import hero4 from '../hero/hero4.png';
 import hero5 from '../hero/hero5.png';
 import hero6 from '../hero/hero6.png';
 import hero7 from '../hero/hero7.png';
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -85,25 +80,31 @@ const styles = StyleSheet.create({
   }
 });
 
-const imageList = [hero1,hero2]
   
 export default class Shopping extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      point: 0
+      point: 0,
+      list:[]
     }
   }
+  goCar = () =>{
+    
+    const { navigate } = this.props.navigation;
+    navigate('ShopCar',this.state.list)
+  }
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>兑换中心</Text>
-          <TouchableOpacity style={styles.headerImageButton_1}>
+          <TouchableOpacity style={styles.headerImageButton_1} onPress={this.goCar}>
             <Image source={shopcar} style={styles.headerImage} resizeMode='contain' />
             <Text style={styles.shopText}>购物车</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerImageButton_2}>
+          <TouchableOpacity style={styles.headerImageButton_2} onPress={()=>navigate('OffPrice')}>
             <Image source={payoff} style={[styles.headerImage, { marginTop: 1 }]} resizeMode='contain' />
             <Text style={styles.shopText}>优惠券</Text>
           </TouchableOpacity>
@@ -115,19 +116,18 @@ export default class Shopping extends Component {
         </View>
         <ScrollView>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            <ShoppingList imageSource={hero1} price='100' text='山猫兽' />
-            <ShoppingList imageSource={hero2} price='200' text='猎人之贮' />
-            <ShoppingList imageSource={hero3} price='300' text='铭刻 碎击之冠' />
-            <ShoppingList imageSource={hero4} price='400' text='铭刻 大器之握' />
-            <ShoppingList imageSource={hero5} price='500' text='双面盟友的燃烧之杖' />
-            <ShoppingList imageSource={hero6} price='600' text='无双诡魅' />
-            <ShoppingList imageSource={hero7} price='700' text='心渊魔角' />
+            <ShoppingList imageSource={hero1} price='100' text='山猫兽' callback={(list) => this.setState({ list })} imageIndex='0' />
+            <ShoppingList imageSource={hero2} price='200' text='猎人之贮' callback={(list) => this.setState({ list })} imageIndex='1' />
+            <ShoppingList imageSource={hero3} price='300' text='铭刻 碎击之冠' callback={(list) => this.setState({ list })} imageIndex='2' />
+            <ShoppingList imageSource={hero4} price='400' text='铭刻 大器之握' callback={(list) => this.setState({ list })} imageIndex='3' />
+            <ShoppingList imageSource={hero5} price='500' text='双面盟友的燃烧之杖' callback={(list) => this.setState({ list })} imageIndex='4' />
+            <ShoppingList imageSource={hero6} price='600' text='无双诡魅' callback={(list) => this.setState({ list })} imageIndex='5' />
+            <ShoppingList imageSource={hero7} price='700' text='心渊魔角' callback={(list) => this.setState({ list })} imageIndex='6' />
           </View>
         </ScrollView>
-
-
       </View>
     );
   }
 }
+
 

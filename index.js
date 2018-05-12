@@ -1,4 +1,3 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
-
-AppRegistry.registerComponent('GraduationProject', () => App);
+import {FirstPage} from './FirstPage';
+AppRegistry.registerComponent('GraduationProject', () => FirstPage);
