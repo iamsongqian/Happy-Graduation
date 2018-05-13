@@ -11,7 +11,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  DeviceEventEmitter
 } from 'react-native';
 import add from '../img/add.png';
 import jian from '../img/fuadd.png'
@@ -41,8 +42,18 @@ export default class ShoppingList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      number: 0
+      number: 0,
     }
+  }
+  componentDidMount() {
+    this.deEmitter = DeviceEventEmitter.addListener('clearList', (a) => {
+      if (a === 'true') {
+        this.setState({ number: 0 })
+      }
+    })
+  }
+  componentWillUnmount() {
+    this.deEmitter.remove();
   }
   add = () => {
     let number = this.state.number + 1
@@ -66,6 +77,7 @@ export default class ShoppingList extends Component {
       }
       list.push(obj)
     }
+    
     this.props.callback(list)
   }
   jian = () => {

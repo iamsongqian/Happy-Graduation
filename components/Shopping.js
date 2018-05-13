@@ -90,9 +90,9 @@ export default class Shopping extends Component {
     }
   }
   goCar = () =>{
-    
+    const {list} = this.state
     const { navigate } = this.props.navigation;
-    navigate('ShopCar',this.state.list)
+    navigate('ShopCar',{list})
   }
   render() {
     const { navigate } = this.props.navigation;

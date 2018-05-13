@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
   control:{
     position:'absolute',
     flexDirection:'row',
-    borderColor: 'gray',
-    borderWidth: 1,
     height:20,
     top:23,
     right:15,
@@ -40,9 +38,6 @@ const styles = StyleSheet.create({
   },
   controlText:{
     width: 50,
-    borderColor: 'gray',
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
     alignItems: 'center',
     height:20,
     justifyContent:'center'
@@ -59,8 +54,8 @@ export default class ShopCarItem extends Component {
     }
   }
   render() {
-    const {imageIndex,text,price} =this.props
-    const {number} = this.state
+    const { imageIndex, text, price } = this.props
+    const { number } = this.state
     return (
       <View>
         {
@@ -72,9 +67,9 @@ export default class ShopCarItem extends Component {
                 <Text style={styles.text}>{price} 积分</Text>
               </View>
               <View style={styles.control}>
-                <TouchableOpacity onPress={()=>this.setState({number:number+1})} style={{width: 20, alignItems: 'center', justifyContent: 'center'}}><Text>+</Text></TouchableOpacity>
-                <View style={styles.controlText}><Text style={{ fontSize: 12}}>{number}</Text></View>
-                <TouchableOpacity onPress={()=>this.setState({number:number-1})} style={{width: 20, alignItems: 'center',justifyContent: 'center'}}><Text>－</Text></TouchableOpacity>
+                
+                <View style={styles.controlText}><Text style={{ fontSize: 12 }}>数量: {number}</Text></View>
+                
               </View>
             </View>
             : null
