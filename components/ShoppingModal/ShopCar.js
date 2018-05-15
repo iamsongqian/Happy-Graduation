@@ -91,7 +91,7 @@ export default class ShopCar extends Component {
         </ScrollView>
         {
           JSON.stringify(list) === '[]' ? null :
-            <View style={{alignItems:'center',width:width,flexDirection:'row',backgroundColor:'#FFFFFF',position:'absolute',height:50,top:(height-100)}}>
+            <View style={{alignItems:'center',width:width,flexDirection:'row',backgroundColor:'#FFFFFF',position:'absolute',height:50,top:(height-74)}}>
               <Text style={{marginLeft:15}}>合计:</Text>
               <Text style={{marginLeft:20,color:'#F78DA0'}}>{this.state.total}</Text>
               <TouchableWithoutFeedback onPress={this.clear}><View style={styles.check}><Text style={styles.checkText}>结算</Text></View></TouchableWithoutFeedback>
