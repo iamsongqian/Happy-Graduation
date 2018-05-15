@@ -16,6 +16,7 @@ import News from './components/News'
 import Shopping from './components/Shopping'
 import Mine from './components/Mine'
 import BottomTabBar from './common/BottomTabBar';
+
 import { createBottomTabNavigator} from 'react-navigation';
 import news from './img/new.png';
 import cart from './img/cart.png';

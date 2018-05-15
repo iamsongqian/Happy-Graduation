@@ -6,7 +6,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import ShopCar from './components/ShoppingModal/ShopCar'
 import OffPrice from './components/ShoppingModal/OffPrice'
-
+import Sign from './components/ShoppingModal/Sign'
 export const FirstPage = createStackNavigator ({
   App:{
     screen:App,
@@ -44,6 +44,26 @@ export const FirstPage = createStackNavigator ({
     screen: OffPrice,
     navigationOptions: {
       title: '优惠券',
+      headerStyle: {
+        elevation: 0,
+        backgroundColor: '#FA7298',
+        height: 30
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        alignSelf: 'center',
+        fontSize: 15,
+        fontWeight: '100',
+      },
+      headerRight: (
+        <View style={{ height: 44, width: 55, justifyContent: 'center', paddingRight: 15 }} />
+      ),
+    }
+  },
+  Sign: {
+    screen: Sign,
+    navigationOptions: {
+      title: '签到',
       headerStyle: {
         elevation: 0,
         backgroundColor: '#FA7298',

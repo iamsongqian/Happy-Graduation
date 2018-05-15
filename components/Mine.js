@@ -119,8 +119,12 @@ export default class Mine extends Component {
     const { navigate } = this.props.navigation;
     navigate('Login')
   }
+  goSign = () => {
+    const { navigate } = this.props.navigation;
+    navigate('Sign')
+  }
   render() {
-
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -144,7 +148,7 @@ export default class Mine extends Component {
           <Text style={styles.Text}>我的服务</Text>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.myButton}>
+          <TouchableOpacity style={styles.myButton} onPress={this.goSign}>
             <Image source={qian} style={styles.image} tintColor='#FA7298' />
             <Text style={styles.buttonText}>签到</Text>
           </TouchableOpacity>
