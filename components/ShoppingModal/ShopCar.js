@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import { DeviceEventEmitter,StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image,ScrollView,TouchableWithoutFeedback,ToastAndroid } from 'react-native';
 import ShopCarItem from './ShopCarItem'
 import empty from '../../img/empty.png'
+import Header from '../NewsDetailHeader'
 const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   item: {
@@ -66,6 +67,7 @@ export default class ShopCar extends Component {
     const {list} = this.state
     return (
       <View>
+      <Header navigation={this.props.navigation} text='购物车'/>
         <ScrollView>
           {
             JSON.stringify(list) === '[]' ?

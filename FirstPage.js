@@ -7,6 +7,8 @@ import Register from './components/Register'
 import ShopCar from './components/ShoppingModal/ShopCar'
 import OffPrice from './components/ShoppingModal/OffPrice'
 import Sign from './components/ShoppingModal/Sign'
+import NewsDetail from './components/NewsDetail'
+import VideoDetail from './components/VideoDetail'
 export const FirstPage = createStackNavigator ({
   App:{
     screen:App,
@@ -16,68 +18,44 @@ export const FirstPage = createStackNavigator ({
   },
   Login: {
     screen: Login,
+    navigationOptions:{
+      header:null
+    }
+  },
+  NewsDetail: {
+    screen: NewsDetail,
+    navigationOptions:{
+      header:null
+    }
+  },
+  VideoDetail: {
+    screen: VideoDetail,
+    navigationOptions:{
+      header:null
+    }
   },
   Register: {
-    screen: Register
+    screen: Register,
+    navigationOptions:{
+      header:null
+    }
   },
   ShopCar: {
     screen: ShopCar,
-    navigationOptions: {
-      title: '购物车',
-      headerStyle: {
-        elevation: 0,
-        backgroundColor: '#FA7298',
-        height: 30
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        alignSelf: 'center',
-        fontSize: 15,
-        fontWeight: '100',
-      },
-      headerRight: (
-        <View style={{ height: 44, width: 55, justifyContent: 'center', paddingRight: 15 }} />
-      ),
+    navigationOptions:{
+      header:null
     }
   },
   OffPrice: {
     screen: OffPrice,
-    navigationOptions: {
-      title: '优惠券',
-      headerStyle: {
-        elevation: 0,
-        backgroundColor: '#FA7298',
-        height: 30
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        alignSelf: 'center',
-        fontSize: 15,
-        fontWeight: '100',
-      },
-      headerRight: (
-        <View style={{ height: 44, width: 55, justifyContent: 'center', paddingRight: 15 }} />
-      ),
+    navigationOptions:{
+      header:null
     }
   },
   Sign: {
     screen: Sign,
-    navigationOptions: {
-      title: '签到',
-      headerStyle: {
-        elevation: 0,
-        backgroundColor: '#FA7298',
-        height: 30
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        alignSelf: 'center',
-        fontSize: 15,
-        fontWeight: '100',
-      },
-      headerRight: (
-        <View style={{ height: 44, width: 55, justifyContent: 'center', paddingRight: 15 }} />
-      ),
+    navigationOptions:{
+      header:null
     }
   }
 })

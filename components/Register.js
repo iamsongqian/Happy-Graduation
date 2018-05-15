@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   Dimensions
 } from 'react-native';
-
+import Header from './NewsDetailHeader'
 
 const styles = StyleSheet.create({
   input: {
@@ -52,23 +52,6 @@ const styles = StyleSheet.create({
 const { height, width } = Dimensions.get('window');
 
 export default class Register extends Component {
-  static navigationOptions = {
-    title: '注册账号',
-    headerStyle: {
-      elevation: 0,
-      backgroundColor: '#FA7298',
-      height: 30
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      alignSelf: 'center',
-      fontSize: 15,
-      fontWeight: '100',
-    },
-    headerRight: (
-      <View style={{ height: 44, width: 55, justifyContent: 'center', paddingRight: 15 }} />
-    ),
-  };
   constructor(props) {
     super(props)
     this.state = {
@@ -76,9 +59,6 @@ export default class Register extends Component {
       password1: '',
       password2: ''
     }
-  }
-  componentDidMount() {
-
   }
   RegisterFinish = (acc, pass) => {
     const { navigate, goBack, state } = this.props.navigation;
@@ -92,6 +72,7 @@ export default class Register extends Component {
     const { account, password2 } = this.state
     return (
       <View style={{ backgroundColor: '#F5F5F5', flex: 1 }}>
+      <Header navigation={this.props.navigation} text='注册'/>
         <View style={styles.input}>
           <Text style={styles.inputText}>输入账号:</Text>
           <TextInput

@@ -19,7 +19,7 @@ import {
 import acc from '../img/acc.png';
 import pass from '../img/pass.png';
 import ScrollableTabView ,{DefaultTabBar} from 'react-native-scrollable-tab-view';
-
+import Header from './NewsDetailHeader'
 import prev from '../img/1.png';
 import after from '../img/2.png';
 
@@ -63,23 +63,6 @@ export default class Login extends Component {
       click:0
     }
   }
-  static navigationOptions = {
-    title: '登陆',
-    headerStyle: {
-      elevation: 0,
-      backgroundColor: '#FA7298',
-      height:30
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      alignSelf: 'center',
-      fontSize:15,
-      fontWeight: '100',
-    },
-    headerRight: (
-      <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
-    ),
-  };
   loginFinish = (account,password) =>{
     AsyncStorage.getItem(account, (error, result) => {
       if (!error) {
@@ -102,6 +85,7 @@ export default class Login extends Component {
     const {account,password} = this.state
     return (
       <View style={{backgroundColor:'#F5F5F5' ,flex:1}}>
+      <Header navigation={this.props.navigation} text='登陆'/>
         <Image source={src} resizeMode='contain' style={{width:width}}/>
         <View style={styles.input}>
           <Image source={acc} style={{width:20,height:20,marginLeft:20}}  tintColor={this.state.click===1?'#FA7298':'#9B9B9B'}/>

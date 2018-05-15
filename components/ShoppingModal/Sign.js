@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableWithoutFeedback, Dimensions, Image } from 'react-native';
 import moment from 'moment'
+import Header from '../NewsDetailHeader'
 const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   loginButton: {
@@ -46,6 +47,7 @@ export default class Sign extends Component {
   render() {
     return (
       <View style={{ alignItems: 'center' ,backgroundColor:'#F0F0F0' }}>
+      <Header navigation={this.props.navigation} text='签到'/>
         <View style ={{alignItems: 'center', justifyContent: 'center',height:160}}>
           <TouchableWithoutFeedback onPress={this.sign}>
             <View style={styles.loginButton}><Text style={styles.login}>{this.state.status}</Text></View>
