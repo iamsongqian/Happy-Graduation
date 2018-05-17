@@ -14,7 +14,9 @@ import {
   StatusBar, 
   TouchableOpacity,
   Dimensions, 
-  Image
+  Image,
+  ToastAndroid,
+  DeviceEventEmitter
 } from 'react-native';
 import acc from '../img/acc.png';
 import pass from '../img/pass.png';
@@ -64,18 +66,21 @@ export default class Login extends Component {
     }
   }
   loginFinish = (account,password) =>{
+
     AsyncStorage.getItem(account, (error, result) => {
       if (!error) {
           if (result !== '' && result !== null) {
-              console.log('登陆成功' + result);
+              ToastAndroid.show('登陆成功',ToastAndroid.SHORT);
+              DeviceEventEmitter.emit('hasAccount',account)
+              this.props.navigation.navigate('Mine')
           } else {
-              console.log('未找到指定保存的内容！');
+              ToastAndroid.show('登陆失败',ToastAndroid.SHORT);
           }
       } else {
-          console.log('查询数据失败');
+          ToastAndroid.show('发生错误',ToastAndroid.SHORT);
       }
       if(password !==result){
-        console.log('登录失败')
+        ToastAndroid.show('用户名或密码错误',ToastAndroid.SHORT)
       }
     })
   }

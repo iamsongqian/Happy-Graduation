@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  DeviceEventEmitter
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
@@ -94,26 +95,21 @@ const styles = StyleSheet.create({
 });
 
 export default class Mine extends Component {
-  searchAccount = (account) => {
-    AsyncStorage.getItem(account, (error, result) => {
-      if (!error) {
-        if (result !== '' && result !== null) {
-          console.log('查询到的内容是：' + result);
-        } else {
-          console.log('未找到指定保存的内容！');
-        }
-      } else {
-        console.log('查询数据失败');
-      }
+  constructor(props){
+    super(props)
+    this.state={
+      hasAccount:false,
+      account:''
+    }
+  }
+  componentDidMount(){
+    this.deEmitter = DeviceEventEmitter.addListener('hasAccount', (account) => {
+      this.setState({ account ,hasAccount:true})
     })
   }
   register = () => {
     const { navigate } = this.props.navigation;
-    navigate('Register', {
-      callback: (data) => {
-        this.searchAccount(data)
-      }
-    })
+    navigate('Register')
   }
   login = () => {
     const { navigate } = this.props.navigation;
@@ -123,31 +119,34 @@ export default class Mine extends Component {
     const { navigate } = this.props.navigation;
     navigate('Sign')
   }
+  special = () => {
+    const { navigate } = this.props.navigation;
+    navigate('Special')
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.registerButton} onPress={this.register}><Text style={styles.register}>注册</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton} onPress={this.login}><Text style={styles.login}>登陆</Text></TouchableOpacity>
-        </View>
+        {
+          this.state.hasAccount ?
+            <View style={[styles.header,{height:60,justifyContent: 'center'}]}>
+              <Text style={{color:'#FFFFFF'}}>欢迎 {this.state.account} !</Text>
+            </View> 
+          :
+            <View style={styles.header}>
+              <TouchableOpacity style={styles.registerButton} onPress={this.register}><Text style={styles.register}>注册</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.loginButton} onPress={this.login}><Text style={styles.login}>登陆</Text></TouchableOpacity>
+            </View>
+        }
+       
         <View style={styles.person}>
           <Text style={styles.Text}>个人中心</Text>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.myButton}>
+          <TouchableOpacity style={styles.myButton} onPress={this.special}>
             <Image source={guan} style={styles.image} />
             <Text style={styles.buttonText}>我的关注</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.myButton}>
-            <Image source={lahei} style={styles.image} />
-            <Text style={styles.buttonText}>黑名单</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.person}>
-          <Text style={styles.Text}>我的服务</Text>
-        </View>
-        <View style={styles.button}>
           <TouchableOpacity style={styles.myButton} onPress={this.goSign}>
             <Image source={qian} style={styles.image} tintColor='#FA7298' />
             <Text style={styles.buttonText}>签到</Text>

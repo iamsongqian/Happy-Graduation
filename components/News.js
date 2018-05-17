@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
+import { DeviceEventEmitter,StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
 import ScrollableTabView ,{DefaultTabBar,ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import HomeFlatListView from './HomeFlatListView'
 const {height, width} = Dimensions.get('window');
@@ -28,30 +28,36 @@ export default class News extends Component {
   componentDidMount(){
     this.setState({
       list :[
-        { columnName: '头条', requestCode: 'T1348647909107' },
-        { columnName: '娱乐', requestCode: 'T1348648517839' },
-        { columnName: '科技', requestCode: 'T1348649580692' },
-        { columnName: '游戏', requestCode: 'T1348654151579' },
-        { columnName: '军事', requestCode: 'T1348649079062' },
+        { columnName: '体育', requestCode: 'T1348647909107' },
+        { columnName: '游戏', requestCode: 'T1348648517839' },
+        { columnName: '职场', requestCode: 'T1348649580692' },
+        { columnName: '育儿', requestCode: 'T1348654151579' },
+        { columnName: '娱乐', requestCode: 'T1348649079062' },
+        { columnName: '健身', requestCode: 'T1348649079062' },
+        { columnName: '汽车', requestCode: 'T1348649079062' },
         { columnName: '财经', requestCode: 'T1348649079062' },
-        { columnName: '体育', requestCode: 'T1348649079062' },
-        { columnName: '旅游', requestCode: 'T1348649079062' },
-        { columnName: '教育', requestCode: 'T1348649079062' },
-        { columnName: '历史', requestCode: 'T1348649079062' },
+        { columnName: '建康', requestCode: 'T1348649079062' },
       ]
     })
+    this.deEmitter = DeviceEventEmitter.addListener('isFollow', (has) => {
+      this.setState({ list: has })
+    })
+  }
+  componentWillUnmount() {
+    this.deEmitter.remove();
   }
   render() {
     const {list} =this.state
-    const length =list.length
     return (
       <View style={{flex:1}}>
-        <StatusBar backgroundColor='#FA7298'/>
+        <StatusBar backgroundColor='#FA7298' />
         <ScrollableTabView
+          initialPage={0}
           renderTabBar={() => <ScrollableTabBar />}
           tabBarBackgroundColor='#FA7298'
           tabBarActiveTextColor='#FFFFFF'
-          tabBarUnderlineStyle={{backgroundColor:'#FFFFFF',width:width/length/2,marginLeft:width/length/4}}
+          tabBarUnderlineStyle={{ backgroundColor: '#FFFFFF', height: 2 }}
+
         >
           {
             list.map(item =>

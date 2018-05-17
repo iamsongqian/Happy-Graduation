@@ -13,7 +13,8 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  ToastAndroid
 } from 'react-native';
 import Header from './NewsDetailHeader'
 
@@ -50,7 +51,11 @@ const styles = StyleSheet.create({
 });
 
 const { height, width } = Dimensions.get('window');
-
+const regBox = {  
+  regEmail : /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,//邮箱  
+  regMobile : /^0?1[3|4|5|8][0-9]\d{8}$/,//手机    
+  regPassword:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/ //密码
+}  
 export default class Register extends Component {
   constructor(props) {
     super(props)
@@ -60,16 +65,33 @@ export default class Register extends Component {
       password2: ''
     }
   }
-  RegisterFinish = (acc, pass) => {
+  RegisterFinish = (account, password1, password2) => {
     const { navigate, goBack, state } = this.props.navigation;
-    AsyncStorage.setItem(acc, pass, () => {
-      console.log(acc + 'and' + pass)
+    if (account === '' || password1 === '') {
+      ToastAndroid.show('账号或密码不能为空', ToastAndroid.SHORT)
+      return;
+    }
+    if (regBox.regEmail.test(account) || regBox.regMobile.test(account)) { }
+    else {
+      ToastAndroid.show('账号格式不正确', ToastAndroid.SHORT)
+      return;
+    }
+    if (password1 !== password2) {
+      ToastAndroid.show('密码请输入一致', ToastAndroid.SHORT)
+      return;
+    }
+    if (!(regBox.regPassword).test(password1)) {
+      ToastAndroid.show('密码格式不正确', ToastAndroid.SHORT)
+      return;
+    }
+    AsyncStorage.setItem(account, password1, () => {
+      console.log(account + 'and' + password1)
     });
-    state.params.callback(acc);
-    goBack();
+    ToastAndroid.show('注册成功', ToastAndroid.SHORT)
+    navigate('Login');
   }
   render() {
-    const { account, password2 } = this.state
+    const { account, password1,password2 } = this.state
     return (
       <View style={{ backgroundColor: '#F5F5F5', flex: 1 }}>
       <Header navigation={this.props.navigation} text='注册'/>
@@ -80,6 +102,8 @@ export default class Register extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(account) => this.setState({ account })}
             value={this.state.account}
+            placeholder='请输入邮箱或手机'
+            placeholderTextColor='gray'
           />
         </View>
         <View style={styles.input}>
@@ -89,7 +113,9 @@ export default class Register extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(password1) => this.setState({ password1 })}
             value={this.state.password1}
-            password={true}
+            secureTextEntry={true}
+            placeholder='密码长度大于6位且包含字母'
+            placeholderTextColor='gray'
           />
         </View>
         <View style={styles.input}>
@@ -99,11 +125,13 @@ export default class Register extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(password2) => this.setState({ password2 })}
             value={this.state.password2}
-            password={true}
+            secureTextEntry={true}
+            placeholder='请再次输入'
+            placeholderTextColor='gray'
           />
         </View>
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.login} onPress={() => this.RegisterFinish(account, password2)}>
+          <TouchableOpacity style={styles.login} onPress={() => this.RegisterFinish(account, password1,password2)}>
             <Text style={{ color: '#FFFFFF', fontSize: 13 }}>注册</Text>
           </TouchableOpacity>
         </View>

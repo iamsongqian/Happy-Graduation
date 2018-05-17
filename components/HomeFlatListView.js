@@ -34,23 +34,42 @@ export default class HomeFlatListView extends PureComponent {
 
 	//加载数据
 	_getNewsList = () => {
-		let _this = this;
+		let list =[]
 		let requestCode = this.props.requestCode;
-
+		const {sourceData} =this.state
 		ajax({
-			url: `http://c.m.163.com/nc/article/headline/${requestCode}/${_this.currPage}-10.html?from=toutiao&passport=&devId=OPdeGFsVSojY0ILFe6009pLR%2FMsg7TLJv5TjaQQ6Hpjxd%2BaWU4dx4OOCg2vE3noj&size=10&version=5.5.3&spever=false&net=wifi&lat=&lon=&ts=1456985878&sign=oDwq9mBweKUtUuiS%2FPvB015PyTDKHSxuyuVq2076XQB48ErR02zJ6%2FKXOnxX046I&encryption=1&canal=appstore`,
+			url: `http://c.m.163.com/nc/article/headline/${requestCode}/${this.currPage}-50.html?from=toutiao&passport=&devId=OPdeGFsVSojY0ILFe6009pLR%2FMsg7TLJv5TjaQQ6Hpjxd%2BaWU4dx4OOCg2vE3noj&size=10&version=5.5.3&spever=false&net=wifi&lat=&lon=&ts=1456985878&sign=oDwq9mBweKUtUuiS%2FPvB015PyTDKHSxuyuVq2076XQB48ErR02zJ6%2FKXOnxX046I&encryption=1&canal=appstore`,
 			method: 'GET',
 			success: (data) => {
-				_this.setState({
-					sourceData: _this.state.refreshing ? data[requestCode] : [..._this.state.sourceData, ...data[requestCode]]
-				});
-				_this.currPage += 10;
+				for(let i =0;i<data[requestCode].length;i++){
+					if(data[requestCode][i].TAG ==='视频'){
+						data[requestCode].splice(i,1)
+					}
+				}
+
+				for (let m = 0; m < data[requestCode].length; m++) {
+					if (data[requestCode][m].interest === this.props.tabLabel) {
+						sourceData.push(data[requestCode][m])
+						console.log('123',sourceData.push(data[requestCode][m]))
+						list.push(data[requestCode][m])
+						this.setState({
+							sourceData: this.state.refreshing ? list : [...this.state.sourceData, ...list]
+						});
+
+						// this.setState({
+						// 	sourceData
+						// })
+
+					}
+				}
+			
+				this.currPage += 10;
 			},
 			error: (err) => {
-				_this.refs.toast.show('网络请求异常');
+				this.refs.toast.show('网络请求异常');
 			},
 			complete: () => {
-				_this.state.refreshing && _this.setState({ refreshing: false });
+				this.state.refreshing && this.setState({ refreshing: false });
 			}
 		});
 	}
@@ -266,7 +285,7 @@ class HomeFlatListItem extends React.PureComponent {
 				style={styles.item}
 				activeOpacity={0.8}
 			>
-				<View style={{ width: screenWidth * 0.63, height: 80, justifyContent: 'space-between' }} >
+				<View style={{ width: screenWidth * 0.63, height: 100, justifyContent: 'space-between' }} >
 					<Text style={{ fontSize: 16, lineHeight: 25, color: '#2c2c2c' }}>{item.title}</Text>
 
 					<View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>

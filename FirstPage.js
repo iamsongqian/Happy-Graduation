@@ -6,9 +6,11 @@ import Login from './components/Login'
 import Register from './components/Register'
 import ShopCar from './components/ShoppingModal/ShopCar'
 import OffPrice from './components/ShoppingModal/OffPrice'
+import Point from './components/ShoppingModal/Point'
 import Sign from './components/ShoppingModal/Sign'
 import NewsDetail from './components/NewsDetail'
 import VideoDetail from './components/VideoDetail'
+import Special from './components/ShoppingModal/Special'
 export const FirstPage = createStackNavigator ({
   App:{
     screen:App,
@@ -52,8 +54,20 @@ export const FirstPage = createStackNavigator ({
       header:null
     }
   },
+  Point: {
+    screen: Point,
+    navigationOptions:{
+      header:null
+    }
+  },
   Sign: {
     screen: Sign,
+    navigationOptions:{
+      header:null
+    }
+  },
+  Special: {
+    screen: Special,
     navigationOptions:{
       header:null
     }

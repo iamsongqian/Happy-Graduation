@@ -11,7 +11,9 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  DeviceEventEmitter,
+  ToastAndroid
 } from 'react-native';
 import ShoppingList from './ShoppingList'
 import shopcar from '../img/shopcar.png';
@@ -85,14 +87,36 @@ export default class Shopping extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      point: 0,
-      list:[]
+      point: '登录后查看',
+      list:[],
+      hasPoint:false
     }
+  }
+  componentDidMount(){
+    this.deEmitter = DeviceEventEmitter.addListener('hasAccount', (account) => {
+      this.setState({ point:0,hasPoint:true})
+    })
+    this.hasSign = DeviceEventEmitter.addListener('Sign', () => {
+      this.setState({ point:30})
+    })
+  }
+  componentWillUnmount() {
+    this.deEmitter.remove();
+    this.hasSign.remove()
   }
   goCar = () =>{
     const {list} = this.state
     const { navigate } = this.props.navigation;
     navigate('ShopCar',{list})
+  }
+  goPoint=()=>{
+    const { navigate } = this.props.navigation;
+    if(this.state.hasPoint){
+      navigate('Point')
+    }else{
+      ToastAndroid.show('请先登录',ToastAndroid.SHORT)
+    }
+    
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -112,7 +136,7 @@ export default class Shopping extends Component {
         <View style={styles.point}>
           <Text style={[styles.pointText, { marginLeft: 15 }]}>可用积分: </Text>
           <Text style={[styles.pointText, { color: '#E1A15B' }]}>{this.state.point}</Text>
-          <TouchableOpacity style={styles.pointButton}><Text style={styles.pointText}>我的积分</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.pointButton} onPress={this.goPoint}><Text style={styles.pointText}>我的积分</Text></TouchableOpacity>
         </View>
         <ScrollView>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
