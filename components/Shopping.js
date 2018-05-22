@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FA7298',
-    paddingVertical: 8
+    paddingVertical: 15
   },
   headerText: {
     color: '#FFFFFF'
   },
   headerImage: {
-    width: 15,
-    height: 15,
+    width: 20,
+    height: 20,
   },
   headerImageButton_1: {
     position: 'absolute',
@@ -87,36 +87,33 @@ export default class Shopping extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      point: '登录后查看',
+      point: 300,
       list:[],
-      hasPoint:false
     }
   }
   componentDidMount(){
-    this.deEmitter = DeviceEventEmitter.addListener('hasAccount', (account) => {
-      this.setState({ point:0,hasPoint:true})
-    })
     this.hasSign = DeviceEventEmitter.addListener('Sign', () => {
-      this.setState({ point:30})
+      this.setState({ point:300})
+    })
+    this.hasPoint = DeviceEventEmitter.addListener('Point', (point) => {
+      if(point>0){
+        this.setState({ point})
+      }else{return;}
     })
   }
   componentWillUnmount() {
-    this.deEmitter.remove();
-    this.hasSign.remove()
+    this.hasSign.remove();
+    this.hasPoint.remove()
   }
   goCar = () =>{
-    const {list} = this.state
+    const {list,point} = this.state
     const { navigate } = this.props.navigation;
-    navigate('ShopCar',{list})
+    navigate('ShopCar',{list,point})
   }
   goPoint=()=>{
     const { navigate } = this.props.navigation;
-    if(this.state.hasPoint){
       navigate('Point')
-    }else{
-      ToastAndroid.show('请先登录',ToastAndroid.SHORT)
-    }
-    
+
   }
   render() {
     const { navigate } = this.props.navigation;

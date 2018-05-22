@@ -37,7 +37,8 @@ export default class News extends Component {
         { columnName: '汽车', requestCode: 'T1348649079062' },
         { columnName: '财经', requestCode: 'T1348649079062' },
         { columnName: '建康', requestCode: 'T1348649079062' },
-      ]
+      ],
+      tabIndexName:''
     })
     this.deEmitter = DeviceEventEmitter.addListener('isFollow', (has) => {
       this.setState({ list: has })
@@ -47,7 +48,8 @@ export default class News extends Component {
     this.deEmitter.remove();
   }
   render() {
-    const {list} =this.state
+    let prev;
+    let {list,tabIndexName} =this.state;
     return (
       <View style={{flex:1}}>
         <StatusBar backgroundColor='#FA7298' />
@@ -57,8 +59,21 @@ export default class News extends Component {
           tabBarBackgroundColor='#FA7298'
           tabBarActiveTextColor='#FFFFFF'
           tabBarUnderlineStyle={{ backgroundColor: '#FFFFFF', height: 2 }}
-
+          onChangeTab={(obj) => {
+            prev = obj.i
+            if(prev===0||prev===10){
+              console.log(tabIndexName)
+              return;
+            }
+            this.setState({tabIndexName:list[prev-1].columnName})
+          }}
         >
+          <HomeFlatListView
+            tabLabel='推荐'
+            requestCode='T1348649079062'
+            navigation={this.props.navigation}
+            tabName={tabIndexName}
+          />
           {
             list.map(item =>
               <HomeFlatListView
@@ -66,9 +81,15 @@ export default class News extends Component {
                 tabLabel={item.columnName}
                 requestCode={item.requestCode}
                 navigation={this.props.navigation}
+                
               />
             )
           }
+          <HomeFlatListView
+            tabLabel='其他'
+            requestCode='T1348649079062'
+            navigation={this.props.navigation}
+          />
         </ScrollableTabView>
       </View>
     );

@@ -34,7 +34,8 @@ export default class Sign extends Component {
     super(props)
     this.state = {
       times: '',
-      status:'点此签到'
+      status:'点此签到',
+      show:false
     }
   }
   sign=()=>{
@@ -43,7 +44,7 @@ export default class Sign extends Component {
     for(let i=0;i<MONTH.length;i++){
       if(arr[1] === MONTH[i]){
         arr[0]=arr[0]+'/'
-        arr[2]=arr[2].replace(/th/,' ')
+        arr[2]=arr[2].replace(/th|st|nd/,' ')
         arr.splice(1,1,CNMONTH[i])
       }
     }
@@ -79,7 +80,7 @@ export default class Sign extends Component {
             :
               <View style={{ height: 80, flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ marginLeft: 15 }}>{this.state.times}</Text>
-                <Text style={{ marginLeft: 200 }}>积分+30</Text>
+                <Text style={{ marginLeft: 200 }}>积分+300</Text>
               </View>
           }
         </View>

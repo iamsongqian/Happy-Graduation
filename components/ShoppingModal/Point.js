@@ -6,9 +6,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Header from '../NewsDetailHeader'
-
+import moment from 'moment'
 const {height, width} = Dimensions.get('window');
-
+const MONTH = ['Jan','Feb','Mar','Apr','May','Jun' ,'Aug','Sep','Oct','Nov','Dec']
+const CNMONTH = ['1/','2/','3/','4/','5/','6/','7/','8/','9/','10/','11/','12/']
 export default class Point extends Component {
   constructor(props){
     super(props)

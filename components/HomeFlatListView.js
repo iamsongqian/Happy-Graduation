@@ -10,6 +10,7 @@ import {
 	Animated,
 	Easing,
 	ImageBackground,
+	ToastAndroid
 } from 'react-native'
 import ajax from './fetch'
 import Toast, { DURATION } from 'react-native-easy-toast'
@@ -41,25 +42,41 @@ export default class HomeFlatListView extends PureComponent {
 			url: `http://c.m.163.com/nc/article/headline/${requestCode}/${this.currPage}-50.html?from=toutiao&passport=&devId=OPdeGFsVSojY0ILFe6009pLR%2FMsg7TLJv5TjaQQ6Hpjxd%2BaWU4dx4OOCg2vE3noj&size=10&version=5.5.3&spever=false&net=wifi&lat=&lon=&ts=1456985878&sign=oDwq9mBweKUtUuiS%2FPvB015PyTDKHSxuyuVq2076XQB48ErR02zJ6%2FKXOnxX046I&encryption=1&canal=appstore`,
 			method: 'GET',
 			success: (data) => {
+				console.log(data)
 				for(let i =0;i<data[requestCode].length;i++){
 					if(data[requestCode][i].TAG ==='视频'){
 						data[requestCode].splice(i,1)
 					}
 				}
-
+				if(this.props.tabLabel==='推荐'){
+					for (let m = 0; m < data[requestCode].length; m++) {
+						if(data[requestCode][m].interest === this.props.tabName) {
+							sourceData.push(data[requestCode][m])
+							list.push(data[requestCode][m])
+							this.setState({
+								sourceData: this.state.refreshing ? list : [...this.state.sourceData, ...list]
+							});
+						}
+					}
+					if (!this.props.tabName ) {
+						ToastAndroid.show(`暂无推荐内容快去看新闻吧`, ToastAndroid.SHORT)
+					} else {
+						ToastAndroid.show(`根据您最近点击的${this.props.tabName}频道，已为您推荐如下内容`, ToastAndroid.SHORT)
+					}
+					}
+					
+				if(this.props.tabLabel==='其他'){
+					this.setState({
+						sourceData:this.state.refreshing?data[requestCode]:[...this.state.sourceData, ...data[requestCode]]
+					})
+				}
 				for (let m = 0; m < data[requestCode].length; m++) {
-					if (data[requestCode][m].interest === this.props.tabLabel) {
+					if(data[requestCode][m].interest === this.props.tabLabel) {
 						sourceData.push(data[requestCode][m])
-						console.log('123',sourceData.push(data[requestCode][m]))
 						list.push(data[requestCode][m])
 						this.setState({
 							sourceData: this.state.refreshing ? list : [...this.state.sourceData, ...list]
 						});
-
-						// this.setState({
-						// 	sourceData
-						// })
-
 					}
 				}
 			

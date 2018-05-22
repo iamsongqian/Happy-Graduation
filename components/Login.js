@@ -69,18 +69,18 @@ export default class Login extends Component {
 
     AsyncStorage.getItem(account, (error, result) => {
       if (!error) {
-          if (result !== '' && result !== null) {
+          if (result===password) {
               ToastAndroid.show('登陆成功',ToastAndroid.SHORT);
-              DeviceEventEmitter.emit('hasAccount',account)
+              for(let i=0;i<20;i++){
+                DeviceEventEmitter.emit('hasAccount',{account:account,show:true})
+              }
+               
               this.props.navigation.navigate('Mine')
           } else {
-              ToastAndroid.show('登陆失败',ToastAndroid.SHORT);
+              ToastAndroid.show('用户名或密码错误',ToastAndroid.SHORT);
           }
       } else {
           ToastAndroid.show('发生错误',ToastAndroid.SHORT);
-      }
-      if(password !==result){
-        ToastAndroid.show('用户名或密码错误',ToastAndroid.SHORT)
       }
     })
   }

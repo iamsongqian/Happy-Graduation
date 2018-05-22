@@ -47,7 +47,7 @@ export default class ShoppingList extends Component {
   }
   componentDidMount() {
     this.deEmitter = DeviceEventEmitter.addListener('clearList', (a) => {
-      if (a === 'true') {
+      if (typeof(a) === 'number') {
         this.setState({ number: 0 })
       }
     })

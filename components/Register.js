@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 const { height, width } = Dimensions.get('window');
 const regBox = {  
   regEmail : /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,//邮箱  
-  regMobile : /^0?1[3|4|5|8][0-9]\d{8}$/,//手机    
+  regMobile : /^0?1[0-9][0-9]\d{8}$/,//手机    
   regPassword:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/ //密码
 }  
 export default class Register extends Component {
@@ -85,7 +85,7 @@ export default class Register extends Component {
       return;
     }
     AsyncStorage.setItem(account, password1, () => {
-      console.log(account + 'and' + password1)
+      console.log(account + '+' + password1)
     });
     ToastAndroid.show('注册成功', ToastAndroid.SHORT)
     navigate('Login');

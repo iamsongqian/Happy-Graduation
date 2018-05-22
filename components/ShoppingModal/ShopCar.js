@@ -4,7 +4,7 @@
  * @flow
  */
 import React, { Component } from 'react';
-import { DeviceEventEmitter,StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image,ScrollView,TouchableWithoutFeedback,ToastAndroid } from 'react-native';
+import { Modal, DeviceEventEmitter, StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image, ScrollView, TouchableWithoutFeedback, ToastAndroid } from 'react-native';
 import ShopCarItem from './ShopCarItem'
 import empty from '../../img/empty.png'
 import Header from '../NewsDetailHeader'
@@ -23,38 +23,50 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginTop: 10,
   },
-  check:{
-    position:'absolute',
-    right:0,
-    backgroundColor:'#F78DA0',
-    height:50,
-    width:110,
+  check: {
+    position: 'absolute',
+    right: 0,
+    backgroundColor: '#F78DA0',
+    height: 50,
+    width: 110,
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center'
   },
-  checkText:{
-    color:'#FFFFFF'
-  }
+  checkText: {
+    color: '#FFFFFF'
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    
+  },
+  innerContainer: {
+    borderRadius: 10, 
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#fff',
+    height:120,
+    width:240,
+  },
 });
 
 export default class ShopCar extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state ={
-      list:this.props.navigation.state.params.list,
-      total:0
+    this.state = {
+      list: this.props.navigation.state.params.list,
+      point : this.props.navigation.state.params.point,
+      total: 0,
+      show: false,
+      leftPoint:0
     }
   }
-  clear = () =>{
-    ToastAndroid.show( '结算完成' ,ToastAndroid.LONG)
-    this.setState({list:[]},
-      DeviceEventEmitter.emit('clearList','true')
-    )
-    this.props.navigation.goBack()
-  }
+
   componentDidMount() {
-    console.log(this.props)
-    const {list} = this.state
+    const { list } = this.state
+    console.log(list)
     let result = 0;
     for (var i = list.length - 1; i >= 0; i--) {
       result += list[i].number * list[i].price;
@@ -63,11 +75,33 @@ export default class ShopCar extends Component {
       total: result
     })
   }
+  clear = () => {
+    const {point,total}=this.state
+    if(point<total){
+      ToastAndroid.show('积分不够',ToastAndroid.SHORT);
+    }else{
+      this.setState({ show: true })
+    }
+  }
+  thinkMore=()=>{
+    this.setState({show:false})
+  }
+  goCheck = () =>{
+    let {point,total}=this.state
+    this.setState({
+      point:point-total,
+      show:false,
+      leftPoint:point-total,
+      list:[]
+    },DeviceEventEmitter.emit('clearList',this.state.leftPoint))
+    ToastAndroid.show('兑换成功',ToastAndroid.SHORT)
+    
+  }
   render() {
-    const {list} = this.state
+    const { list,point ,total } = this.state
     return (
       <View>
-      <Header navigation={this.props.navigation} text='购物车'/>
+        <Header navigation={this.props.navigation} text='购物车' />
         <ScrollView>
           {
             JSON.stringify(list) === '[]' ?
@@ -91,12 +125,40 @@ export default class ShopCar extends Component {
         </ScrollView>
         {
           JSON.stringify(list) === '[]' ? null :
-            <View style={{alignItems:'center',width:width,flexDirection:'row',backgroundColor:'#FFFFFF',position:'absolute',height:50,top:(height-74)}}>
-              <Text style={{marginLeft:15}}>合计:</Text>
-              <Text style={{marginLeft:20,color:'#F78DA0'}}>{this.state.total}</Text>
-              <TouchableWithoutFeedback onPress={this.clear}><View style={styles.check}><Text style={styles.checkText}>结算</Text></View></TouchableWithoutFeedback>
+            <View style={{ alignItems: 'center', width: width, flexDirection: 'row', backgroundColor: '#FFFFFF', position: 'absolute', height: 50, top: (height - 74) }}>
+              <Text style={{ marginLeft: 15 }}>合计:</Text>
+              <Text style={{ marginLeft: 10, color: '#F78DA0' }}>{this.state.total}</Text>
+              <Text style={{ marginLeft: 15 }}>我的积分：</Text> 
+              <Text  style={{color: '#F78DA0' }}> {point}</Text>
+              <TouchableWithoutFeedback onPress={this.clear}>
+                <View style={styles.check}>
+                  <Text style={styles.checkText}>结算</Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
         }
+        <View >
+          <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={this.state.show}
+            onRequestClose={() => { console.log("Modal has been closed.") }}
+          >
+            <View style={styles.container}>
+              <View style={styles.innerContainer}>
+                <Text>确定要兑换吗</Text>
+                <View style={{ flexDirection: 'row', marginTop: 30,justifyContent:'space-around',width:240 }}>
+                  <TouchableWithoutFeedback onPress={this.thinkMore}>
+                    <View><Text>再想想</Text></View>
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={this.goCheck}>
+                    <View><Text>我要兑换</Text></View>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }

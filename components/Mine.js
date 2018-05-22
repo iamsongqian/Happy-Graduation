@@ -12,7 +12,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  ToastAndroid
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
@@ -103,8 +104,8 @@ export default class Mine extends Component {
     }
   }
   componentDidMount(){
-    this.deEmitter = DeviceEventEmitter.addListener('hasAccount', (account) => {
-      this.setState({ account ,hasAccount:true})
+    this.deEmitter = DeviceEventEmitter.addListener('hasAccount', (event) => {
+      this.setState({ account:event.account ,hasAccount:true})
     })
   }
   register = () => {
@@ -116,10 +117,18 @@ export default class Mine extends Component {
     navigate('Login')
   }
   goSign = () => {
+    if(!this.state.hasAccount){
+      ToastAndroid.show( '请先登录' ,ToastAndroid.SHORT)
+      return;
+    }
     const { navigate } = this.props.navigation;
     navigate('Sign')
   }
   special = () => {
+    if(!this.state.hasAccount){
+      ToastAndroid.show( '请先登录' ,ToastAndroid.SHORT)
+      return;
+    }
     const { navigate } = this.props.navigation;
     navigate('Special')
   }
