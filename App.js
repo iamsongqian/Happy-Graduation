@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Text,
 	View,
-	Image
+	Image,
+	AsyncStorage
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import News from './components/News'

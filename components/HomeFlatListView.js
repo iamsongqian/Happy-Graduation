@@ -50,7 +50,7 @@ export default class HomeFlatListView extends PureComponent {
 				}
 				if(this.props.tabLabel==='推荐'){
 					for (let m = 0; m < data[requestCode].length; m++) {
-						if(data[requestCode][m].interest === this.props.tabName) {
+						if(data[requestCode][m].interestinterest === this.props.tabName) {
 							sourceData.push(data[requestCode][m])
 							list.push(data[requestCode][m])
 							this.setState({

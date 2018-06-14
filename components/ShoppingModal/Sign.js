@@ -4,7 +4,7 @@
  * @flow
  */
 import React, { Component } from 'react';
-import {DeviceEventEmitter,ToastAndroid, StyleSheet, Text, View, StatusBar, TouchableWithoutFeedback, Dimensions, Image } from 'react-native';
+import {AsyncStorage,DeviceEventEmitter,ToastAndroid, StyleSheet, Text, View, StatusBar, TouchableWithoutFeedback, Dimensions, Image } from 'react-native';
 import moment from 'moment'
 import Header from '../NewsDetailHeader'
 const {height, width} = Dimensions.get('window');
@@ -35,8 +35,15 @@ export default class Sign extends Component {
     this.state = {
       times: '',
       status:'点此签到',
-      show:false
+      show:false,
     }
+  }
+  componentDidMount(){
+    AsyncStorage.getItem('da',(error,result)=>{
+      if(result){
+        this.sign()
+      }
+    })
   }
   sign=()=>{
     let a = moment().format('YYYY MMMM Do')
@@ -52,11 +59,15 @@ export default class Sign extends Component {
       status:'已签到',
       times:arr
     })
-    DeviceEventEmitter.emit('Sign',true)
+    AsyncStorage.setItem('point','300',()=>{
+      console.log(123)
+    })
+    AsyncStorage.setItem('da','300',()=>{
+      console.log(123)
+    })
     if(this.state.status === '已签到'){
-      ToastAndroid.show( '请不要重复签到' ,ToastAndroid.SHORT)
+      ToastAndroid.show( '已签到,请不要重复签到' ,ToastAndroid.SHORT)
     }
-
   }
   render() {
     return (

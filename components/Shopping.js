@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   ScrollView,
   DeviceEventEmitter,
-  ToastAndroid
+  ToastAndroid,
+  AsyncStorage
 } from 'react-native';
 import ShoppingList from './ShoppingList'
 import shopcar from '../img/shopcar.png';
@@ -87,33 +88,26 @@ export default class Shopping extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      point: 300,
+      point: 0,
       list:[],
     }
   }
-  componentDidMount(){
-    this.hasSign = DeviceEventEmitter.addListener('Sign', () => {
-      this.setState({ point:300})
-    })
-    this.hasPoint = DeviceEventEmitter.addListener('Point', (point) => {
-      if(point>0){
-        this.setState({ point})
-      }else{return;}
-    })
-  }
-  componentWillUnmount() {
-    this.hasSign.remove();
-    this.hasPoint.remove()
-  }
   goCar = () =>{
-    const {list,point} = this.state
+    let {list,point} = this.state
     const { navigate } = this.props.navigation;
+    if(point==='0'){
+      list=[]
+    }
     navigate('ShopCar',{list,point})
+  }
+  ReNew =()=>{
+    AsyncStorage.getItem('point',(error,result)=>{
+      this.setState({point:result})
+    })
   }
   goPoint=()=>{
     const { navigate } = this.props.navigation;
       navigate('Point')
-
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -133,6 +127,7 @@ export default class Shopping extends Component {
         <View style={styles.point}>
           <Text style={[styles.pointText, { marginLeft: 15 }]}>可用积分: </Text>
           <Text style={[styles.pointText, { color: '#E1A15B' }]}>{this.state.point}</Text>
+          <TouchableOpacity style={{marginLeft:10}} onPress={this.ReNew}><Text style={styles.pointText}>刷新</Text></TouchableOpacity>
           <TouchableOpacity style={styles.pointButton} onPress={this.goPoint}><Text style={styles.pointText}>我的积分</Text></TouchableOpacity>
         </View>
         <ScrollView>

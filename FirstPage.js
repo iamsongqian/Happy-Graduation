@@ -11,6 +11,8 @@ import Sign from './components/ShoppingModal/Sign'
 import NewsDetail from './components/NewsDetail'
 import VideoDetail from './components/VideoDetail'
 import Special from './components/ShoppingModal/Special'
+import Mima from './components/ShoppingModal/Mima'
+
 export const FirstPage = createStackNavigator ({
   App:{
     screen:App,
@@ -71,5 +73,11 @@ export const FirstPage = createStackNavigator ({
     navigationOptions:{
       header:null
     }
-  }
+  },
+  Mima: {
+    screen: Mima,
+    navigationOptions:{
+      header:null
+    }
+  },
 })

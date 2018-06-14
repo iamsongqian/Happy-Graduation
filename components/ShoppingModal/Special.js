@@ -91,7 +91,9 @@ export default class Special extends Component {
       ],
     }
   }
+
   follow = (item, index) => {
+    let list=[]
     const {no,has}=this.state
     no.push(item)
     has.splice(index,1)
@@ -99,8 +101,10 @@ export default class Special extends Component {
       has, no
     },
     DeviceEventEmitter.emit('isFollow',has))
+
   }
   unfollow = (item, index) => {
+    let list =[]
     const {no,has}=this.state
     has.push(item)
     no.splice(index,1)
@@ -121,7 +125,7 @@ export default class Special extends Component {
           {
             has.length === 0 ? <Text>点击下方可关注</Text> :
               has.map((item, index) =>
-                <Button item={item} index={index} callback={()=>this.follow(item,index)} key={index}/>
+                <Button item={item} key={index} callback={()=>this.follow(item,index)}/>
               )
           }
         </View>
@@ -132,7 +136,7 @@ export default class Special extends Component {
           {
             no.length === 0 ? <Text>没有更多了,点击上方可关注</Text> :
               no.map((item, index) => 
-                <Button item={item} index={index} callback={()=>this.unfollow(item,index)} key={index}/>
+                <Button item={item} key={index} callback={()=>this.unfollow(item,index)} />
               )
           }
         </View>

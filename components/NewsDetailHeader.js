@@ -11,19 +11,13 @@ import {
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window')
 
 export default class NewsDetailHeader extends PureComponent {
-
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-
-        }
+    constructor(props){
+        super(props)
     }
-
     render(){
         return(
             <View style={styles.headerContainer}>
-                <TouchableOpacity activeOpacity={0.8} style={{flexDirection: 'row', alignItems:'center', flex: 1}} onPress={() => this.props.navigation.goBack()} >
+                <TouchableOpacity activeOpacity={0.8} style={{flexDirection: 'row', alignItems:'center', flex: 1}} onPress={()=> this.props.navigation.goBack()} >
                 <Image source={require('././images/i_goback.png')} resizeMode={'contain'} style={styles.headerLeftImg} />
                     <Text style={{color: 'white', fontSize: 16}}>{this.props.leftText}</Text>
                 </TouchableOpacity>

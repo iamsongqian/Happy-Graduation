@@ -4,7 +4,7 @@
  * @flow
  */
 import React, { Component } from 'react';
-import { Modal, DeviceEventEmitter, StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image, ScrollView, TouchableWithoutFeedback, ToastAndroid } from 'react-native';
+import { AsyncStorage,Modal, DeviceEventEmitter, StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, Image, ScrollView, TouchableWithoutFeedback, ToastAndroid } from 'react-native';
 import ShopCarItem from './ShopCarItem'
 import empty from '../../img/empty.png'
 import Header from '../NewsDetailHeader'
@@ -87,15 +87,18 @@ export default class ShopCar extends Component {
     this.setState({show:false})
   }
   goCheck = () =>{
-    let {point,total}=this.state
+    let {point,total,leftPoint}=this.state
     this.setState({
       point:point-total,
       show:false,
       leftPoint:point-total,
       list:[]
-    },DeviceEventEmitter.emit('clearList',this.state.leftPoint))
+    })
+    AsyncStorage.setItem('point','0',()=>{
+      console.log(123)
+    })
     ToastAndroid.show('兑换成功',ToastAndroid.SHORT)
-    
+    DeviceEventEmitter.emit('clearList',123)
   }
   render() {
     const { list,point ,total } = this.state

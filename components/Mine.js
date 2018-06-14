@@ -23,6 +23,7 @@ import guan from '../img/guanzhu.png';
 import lahei from '../img/heimingdan.png';
 import qian from '../img/qiandao.png';
 import jifen from '../img/jifen.png';
+import mima from '../img/mima.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:'space-around',
     backgroundColor: '#FFFFFF',
     borderTopColor: '#F0F0F0',
     borderTopWidth: 0.5,
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
   myButton: {
     alignItems: 'center',
-    marginLeft: 15,
+    
   },
   buttonText: {
     color: '#242423',
@@ -124,6 +126,15 @@ export default class Mine extends Component {
     const { navigate } = this.props.navigation;
     navigate('Sign')
   }
+  goMima = () => {
+    const {account}=this.state
+    if(!this.state.hasAccount){
+      ToastAndroid.show( '请先登录' ,ToastAndroid.SHORT)
+      return;
+    }
+    const { navigate } = this.props.navigation;
+    navigate('Mima',account)
+  }
   special = () => {
     if(!this.state.hasAccount){
       ToastAndroid.show( '请先登录' ,ToastAndroid.SHORT)
@@ -159,6 +170,10 @@ export default class Mine extends Component {
           <TouchableOpacity style={styles.myButton} onPress={this.goSign}>
             <Image source={qian} style={styles.image} tintColor='#FA7298' />
             <Text style={styles.buttonText}>签到</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.myButton} onPress={this.goMima}>
+            <Image source={mima} style={styles.image} tintColor='#FA7298' />
+            <Text style={styles.buttonText}>修改密码</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -71,7 +71,6 @@ export default class ShoppingList extends Component {
       for (i = 0; i < list.length; i++) {
         if (JSON.stringify(obj.text) === JSON.stringify(list[i].text)) {
           list[i].number += 1
-          console.log(list)
           return;
         }
       }
@@ -95,7 +94,6 @@ export default class ShoppingList extends Component {
         if(list[i].number === 0){
           list.splice(i,1)
         }
-        console.log(list)
         return;
       }
     }

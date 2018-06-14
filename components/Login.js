@@ -114,6 +114,7 @@ export default class Login extends Component {
             onFocus ={()=>this.setState({click:2})}
             placeholder='在这里输入密码'
             placeholderTextColor='#C5C5C5'
+            secureTextEntry={true}
           /> 
         </View>
         <View style={{justifyContent:'center',flexDirection:'row'}}>

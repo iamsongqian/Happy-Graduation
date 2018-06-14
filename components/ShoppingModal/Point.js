@@ -35,7 +35,7 @@ export default class Point extends Component {
         <Header navigation={this.props.navigation} text='我的积分' />
         <View style={{ height: 80, flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ marginLeft: 15 }}>{this.state.arr}</Text>
-          <Text style={{ marginLeft: 200 }}>积分+30</Text>
+          <Text style={{ marginLeft: 200 }}>积分+300</Text>
         </View>
       </View>
     );
